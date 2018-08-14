@@ -63,6 +63,7 @@ module Graphics.PDF
   -- ** Typesetting
   , module Graphics.PDF.Typesetting
   , module Graphics.PDF.Hyphenate
+  , flushDraw
   ) where
 
 #if !MIN_VERSION_base(4,8,0)
