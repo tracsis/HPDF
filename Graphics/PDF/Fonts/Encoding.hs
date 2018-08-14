@@ -25,7 +25,6 @@ import           Data.FileEmbed
 import qualified Data.Map.Strict             as M
 import           Data.Maybe                  (mapMaybe, fromJust)
 import           Graphics.PDF.LowLevel.Types
-import           Paths_HPDF
 import           System.FilePath
 
 type PostscriptName = String

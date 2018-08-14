@@ -33,7 +33,6 @@ import           Graphics.PDF.Fonts.Encoding   (PostscriptName)
 import           Graphics.PDF.Fonts.Font       (emptyFontStructure)
 import           Graphics.PDF.Fonts.FontTypes
 import           Graphics.PDF.LowLevel.Types
-import           Paths_HPDF
 import           Text.Parsec                   (getState, modifyState)
 import           Text.Parsec.Prim              (parserZero)
 import           Text.ParserCombinators.Parsec hiding (space)
