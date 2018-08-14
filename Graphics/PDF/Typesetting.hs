@@ -110,8 +110,6 @@ import Graphics.PDF.Typesetting.Layout
 import Graphics.PDF.Typesetting.Box
 import Graphics.PDF.Typesetting.StandardStyle
 import Graphics.PDF.Typesetting.WritingSystem
-import Data.List(unfoldr,intersperse)
-import Data.Char(isSpace,isAlpha)
 import qualified Data.Text as T
 
 -- | Display a formatted text in a given bounding rectangle with a given default paragraph style, a given default text style. No clipping
@@ -453,8 +451,8 @@ drawTextBox x y w h ori ps p t =
           N -> (x - wc/2.0,y)
           S -> (x - wc/2.0,y + hc)
         box = withNewContext $ do
-    	   applyMatrix $ translate (dx :+ dy)
-    	   d
+         applyMatrix $ translate (dx :+ dy)
+         d
         r = Rectangle ((xa + dx) :+ (ya + dy)) ((xb + dx) :+ (yb + dy))
     in
     (r,box)

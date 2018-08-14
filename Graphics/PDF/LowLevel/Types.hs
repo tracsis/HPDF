@@ -373,9 +373,9 @@ instance (PdfObject a, PdfObject b) => PdfLengthInfo (Either a b) where
 
 modifyStrict :: (MonadState s m) => (s -> s) -> m ()
 modifyStrict f = do
-  	s <- get
-  	put $! (f s)
-  	
+    s <- get
+    put $! (f s)
+    
 -- | A monad where paths can be created
 class MonadWriter Builder m => MonadPath m
 

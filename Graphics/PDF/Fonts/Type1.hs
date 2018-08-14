@@ -15,7 +15,7 @@
 module Graphics.PDF.Fonts.Type1(
       IsFont
     , GlyphSize
-    , Type1Font
+    , Type1Font(..)
     , AFMData
     , Type1FontStructure(..)
     , getAfmData
@@ -24,16 +24,15 @@ module Graphics.PDF.Fonts.Type1(
 
 import Graphics.PDF.LowLevel.Types
 import Graphics.PDF.Resources
-import Data.Char 
 import qualified Data.Map.Strict as M
 import Graphics.PDF.Fonts.Font
 import Graphics.PDF.Fonts.AFMParser 
-import System.FilePath 
 import Graphics.PDF.Fonts.Encoding
 import Graphics.PDF.Fonts.FontTypes
 import Graphics.PDF.Fonts.AFMParser (AFMFont, parseFont)
 import Data.List 
-import Data.Function(on)
+
+data Type1Font = Type1Font FontStructure (PDFReference EmbeddedFont)
 
 instance IsFont Type1Font where 
   getDescent (Type1Font fs _) s = trueSize s $ descent fs 
@@ -66,7 +65,7 @@ mkType1FontStructure pdfRef (AFMData f)  = do
 
 instance PdfResourceObject Type1Font where
    toRsrc (Type1Font f ref) =  
-   	        AnyPdfObject . PDFDictionary . M.fromList $
+            AnyPdfObject . PDFDictionary . M.fromList $
                            [(PDFName "Type",AnyPdfObject . PDFName $ "Font")
                            , (PDFName "Subtype",AnyPdfObject . PDFName $ "Type1")
                            , (PDFName "BaseFont",AnyPdfObject . PDFName $ baseFont f)
@@ -83,7 +82,7 @@ instance PdfResourceObject Type1Font where
             widths = map findWidth [firstChar .. lastChar] 
             bbox = map AnyPdfObject .fontBBox $ f 
             descriptor = PDFDictionary . M.fromList $ 
-          	  [ (PDFName "Type",AnyPdfObject . PDFName $ "Font")
+              [ (PDFName "Type",AnyPdfObject . PDFName $ "Font")
               , (PDFName "Subtype",AnyPdfObject . PDFName $ "Type1")
               , (PDFName "BaseFont",AnyPdfObject . PDFName $ baseFont f)
               , (PDFName "FontFile", AnyPdfObject ref)
@@ -93,4 +92,4 @@ instance PdfResourceObject Type1Font where
               , (PDFName "Ascent",AnyPdfObject . PDFInteger . fromIntegral $ ascent f)
               , (PDFName "Descent",AnyPdfObject . PDFInteger . fromIntegral $ descent f)
               , (PDFName "CapHeight",AnyPdfObject . PDFInteger . fromIntegral $ capHeight f)
-          	  ]
+              ]

@@ -66,9 +66,9 @@ data PDFLink = PDFLink
 --
 --inverse :: Matrix -> Matrix
 --inverse m@(Matrix a b c d e f) = (Matrix (d/de) (-b/de) (-c/de) (a/de) 0 0) * (Matrix 1 0 0 1 (-e) (-f))
---	where
---		de = det m
-		
+--  where
+--    de = det m
+    
 applyMatrixToRectangle :: Matrix -> [PDFFloat] -> [PDFFloat]
 applyMatrixToRectangle m [xa,ya,xb,yb] = 
     let (xa',ya') = m `applyTo` (xa,ya)
