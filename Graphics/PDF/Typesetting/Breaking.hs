@@ -46,7 +46,6 @@ module Graphics.PDF.Typesetting.Breaking (
 import Graphics.PDF.LowLevel.Types
 import Data.List(minimumBy)  
 import qualified Data.Map.Strict as M
-import Graphics.PDF.Text
 import Graphics.PDF.Typesetting.Box
 import Data.Maybe(fromJust)
 import Graphics.PDF.Fonts.Font hiding(fontSize)
