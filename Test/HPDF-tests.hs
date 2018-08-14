@@ -3,10 +3,10 @@
 module Main where
 
 import Test.Framework
-import Data.Either (isRight)
 
 import Graphics.PDF.Image(JpegFile, readJpegDataURL, jpegBounds)
 
+main :: IO ()
 main = htfMain htf_thisModulesTests
 
 raw_jpeg :: String

@@ -46,7 +46,6 @@ module Graphics.PDF.Typesetting.Breaking (
 import Graphics.PDF.LowLevel.Types
 import Data.List(minimumBy)  
 import qualified Data.Map.Strict as M
-import Graphics.PDF.Text
 import Graphics.PDF.Typesetting.Box
 import Data.Maybe(fromJust)
 import Graphics.PDF.Fonts.Font hiding(fontSize)
@@ -635,7 +634,7 @@ ripText :: Style s
         -> BRState
         -> [SpecialChar] -- ^ Special meaning glyph
         -> [Letter s] -- ^ List of chars and char width taking into account kerning
-ripText s settings [] = []
+ripText _ _ [] = []
 ripText s settings (NormalChar ca:BreakingHyphen:NormalChar cb:l) = 
     let PDFFont f fontSize = (textFont . textStyle $ s) 
         ga = charGlyph f ca 

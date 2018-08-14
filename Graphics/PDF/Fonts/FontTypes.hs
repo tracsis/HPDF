@@ -12,15 +12,13 @@
 ---------------------------------------------------------
 -- #hide
 module Graphics.PDF.Fonts.FontTypes(
-	  GlyphSize
+      GlyphSize
     , FontSize 
     , FontStructure(..)
     , GlyphPair(..)
     , FontData(..)
-    , StdFont(..)
-    , Type1Font(..)
     , mkFlags
-	) where
+    ) where
 
 import Graphics.PDF.LowLevel.Types
 import qualified Data.Map.Strict as M
@@ -72,12 +70,6 @@ mkFlags fs = bit (fixedPitch fs) 1 .|.
     where 
         bit True n = (1 `shiftL` (n-1)) 
         bit False _ = 0
-
-data StdFont = StdFont FontStructure
-
-
-data Type1Font = Type1Font FontStructure (PDFReference EmbeddedFont)
-
 
 data FontData = Type1Data B.ByteString
 

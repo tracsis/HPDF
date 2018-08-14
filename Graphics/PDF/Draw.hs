@@ -80,6 +80,7 @@ module Graphics.PDF.Draw(
  , currentMatrix
  , multiplyCurrentMatrixWith
  , PDFGlobals(..)
+ , flushDraw
  ) where
  
 import Data.Maybe
@@ -91,6 +92,7 @@ import qualified Data.Map.Strict as M
 import qualified Data.IntMap as IM
 import qualified Data.Binary.Builder as BU
 import qualified Data.ByteString.Lazy as B
+import qualified Data.ByteString.Builder as BB
 
 import Control.Monad.ST
 import Data.STRef
@@ -171,6 +173,14 @@ class PDFGlobals m where
     
 -- | The drawing monad
 newtype Draw a = Draw {unDraw :: forall s. DrawTuple s -> ST s a }
+
+flushDraw :: Draw ()
+flushDraw = Draw $ \_env -> do
+  builder <- readSTRef $ builderRef _env
+  let bytes = BU.toLazyByteString builder
+
+  B.foldrChunks seq () bytes
+    `seq` writeSTRef (builderRef _env) (BB.lazyByteString bytes)
 
 instance Applicative Draw where
     pure x = Draw $ \_env -> return x

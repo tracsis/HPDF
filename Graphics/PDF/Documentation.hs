@@ -5,36 +5,36 @@ test.hs in folder Test.
 
 -}
 module Graphics.PDF.Documentation(
-	-- * Creating a document
-	-- $creating
+  -- * Creating a document
+  -- $creating
 
-	-- * Adding pages
-	-- $pages
+  -- * Adding pages
+  -- $pages
 
-	-- * Creating the page content 
-	-- $content
+  -- * Creating the page content 
+  -- $content
 
-	-- * Text 
-	-- $text
+  -- * Text 
+  -- $text
 
-	-- ** MonadStyle 
-	-- $monadstyle
+  -- ** MonadStyle 
+  -- $monadstyle
 
-	-- * Geometry 
-	-- $geometry
+  -- * Geometry 
+  -- $geometry
 
-	-- * X Form 
-	-- $xform
+  -- * X Form 
+  -- $xform
 
-	-- * Image 
-	-- $image
+  -- * Image 
+  -- $image
 
-	-- * Annotations 
-	-- $annotations
+  -- * Annotations 
+  -- $annotations
 
-	-- * Warning 
-	-- $warning
-	) where 
+  -- * Warning 
+  -- $warning
+  ) where 
 
 {- $creating 
 

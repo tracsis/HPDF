@@ -1,5 +1,5 @@
 Name: HPDF
-Version: 1.5.0
+Version: 1.5.0.1
 cabal-version: >=1.10
 License: BSD3
 License-file:LICENSE
@@ -17,11 +17,9 @@ extra-source-files:
   Test/Makefile
   Test/Penrose.hs
   Test/test.hs
-  README.txt
   NEWS.txt
   TODO.txt
   changelog
-data-files:
   Core14_AFMs/Courier-Bold.afm
   Core14_AFMs/Helvetica-BoldOblique.afm
   Core14_AFMs/Times-Bold.afm
@@ -40,13 +38,22 @@ data-files:
   Encodings/glyphlist.txt
   Encodings/zapfdingbats.txt
   Encodings/pdfencodings.txt
+data-files:
   Test/logo.jpg
+
+flag build-executables
+  description: Build executables
+  default: False
 
 source-repository head
   type:     git
   location: https://github.com/alpheccar/HPDF.git
 
 Test-Suite HPDF-Tests
+  if flag(build-executables)
+    Buildable: True
+  else
+    Buildable: False
   Type:              exitcode-stdio-1.0
   Main-is:           HPDF-tests.hs
   hs-source-dirs:    Test
@@ -56,6 +63,10 @@ Test-Suite HPDF-Tests
   Default-language:  Haskell2010
   
 Executable HPDF-Demo
+  if flag(build-executables)
+    Buildable: True
+  else
+    Buildable: False
   Main-is:           test.hs
   hs-source-dirs:    Test
   Build-depends:     base >= 4, 
@@ -75,9 +86,7 @@ library
   build-depends: 
       base >= 4 && < 5, 
       containers, 
-      random >= 1.0, 
       bytestring >= 0.9, 
-      array >= 0.1, 
       zlib >= 0.5, 
       binary >= 0.4, 
       mtl,
@@ -87,7 +96,8 @@ library
       text >= 1.2.0,
       network-uri >= 2.6.0.3,
       parsec >=3.1.9,
-      filepath >= 1.4.0
+      filepath >= 1.4.0,
+      file-embed
   Default-language:  Haskell2010
 
   ghc-options: -Wall -fno-warn-tabs -funbox-strict-fields  -O2

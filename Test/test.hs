@@ -28,6 +28,7 @@ import System.FilePath
 
 import Paths_HPDF
 
+alpheccarURL :: URI
 alpheccarURL = fromJust $ parseURI "http://www.alpheccar.org"
 
 fontDebug :: PDFFont -> T.Text -> Draw ()
@@ -199,16 +200,16 @@ instance Style MyParaStyles where
         fillColor $ Rgb 0.6 0.6 1
         strokeColor $ Rgb 0.6 0.6 1
         fillAndStroke r
-        d
+        _ <- d
         return()
     
     sentenceStyle (RedRectStyle _) = Just $ \r d -> do
         strokeColor red
         stroke r
-        d
+        _ <- d
         return()
     sentenceStyle (Crazy _) = Just $ \r d -> do
-       d
+       _ <- d
        strokeColor blue
        stroke r
     sentenceStyle _ = Nothing
@@ -234,7 +235,7 @@ instance Style MyParaStyles where
             stroke p
             fillColor $ Rgb 0.8 1.0 0.8
             fill p
-            withNewContext $ do
+            _ <- withNewContext $ do
               --applyMatrix . rotate . Degree $ angle
               drawWord
             return ()
@@ -264,7 +265,7 @@ crazyWord :: Rectangle -> StyleFunction -> Draw a -> Draw ()
 crazyWord r@(Rectangle (xa :+ ya) (xb :+ yb)) DrawWord d = do
     fillColor $ Rgb 0.6 1 0.6 
     fill r
-    d
+    _ <- d
     strokeColor $ Rgb 0 0 1
     let m = (ya+yb)/2.0
     stroke $ Line xa m xb m 
@@ -289,11 +290,11 @@ instance ComparableStyle MyVertStyles where
     
     
 instance ParagraphStyle MyVertStyles MyParaStyles  where
-    lineWidth (BluePara f a) w nb = (if nb > 3 then w else w-a) - 20.0
+    lineWidth (BluePara _ a) w nb = (if nb > 3 then w else w-a) - 20.0
     lineWidth (CirclePara f) _ nb = 
            let nbLines = 15.0
-               PDFFont theFont fontSize = textFont . textStyle $ Normal f
-               r = nbLines * (getHeight theFont fontSize)
+               PDFFont theFont fSize = textFont . textStyle $ Normal f
+               r = nbLines * (getHeight theFont fSize)
                pasin x' = if x' >= 1.0 then pi/2 else if x' <= -1.0 then (-pi/2) else asin x'
                angle l = pasin $ (nbLines - (fromIntegral l)  ) / nbLines
            in
@@ -311,12 +312,12 @@ instance ParagraphStyle MyVertStyles MyParaStyles  where
     interline _ = Nothing
         
     paragraphChange (BluePara theFont _) _ (AGlyph st c _:l) = 
-        let fontSize = 45
-            w' = glyphWidth theFont fontSize c 
-            charRect = Rectangle (0 :+ (- getDescent theFont fontSize)) (w' :+ (getHeight theFont fontSize - getDescent theFont fontSize))
+        let fSize = 45
+            w' = glyphWidth theFont fSize c 
+            charRect = Rectangle (0 :+ (- getDescent theFont fSize)) (w' :+ (getHeight theFont fSize - getDescent theFont fSize))
             c' = mkLetter (0,0,0) Nothing . mkDrawBox $ do
                 withNewContext $ do
-                    applyMatrix $ translate ((-w') :+ (getDescent theFont fontSize - getHeight theFont fontSize + styleHeight st - styleDescent st))
+                    applyMatrix $ translate ((-w') :+ (getDescent theFont fSize - getHeight theFont fSize + styleHeight st - styleDescent st))
                     fillColor $ Rgb 0.6 0.6 1
                     strokeColor $ Rgb 0.6 0.6 1
                     fillAndStroke $ charRect
@@ -324,9 +325,9 @@ instance ParagraphStyle MyVertStyles MyParaStyles  where
                     drawText $ do
                         renderMode AddToClip
                         textStart 0 0
-                        setFont (PDFFont theFont fontSize)
+                        setFont (PDFFont theFont fSize)
                         displayGlyphs (glyph c)
-                    paintWithShading (AxialShading 0 (- getDescent theFont fontSize) w' (getHeight theFont fontSize - getDescent theFont fontSize) (Rgb 1 0 0) (Rgb 0 0 1)) (addShape charRect)
+                    paintWithShading (AxialShading 0 (- getDescent theFont fSize) w' (getHeight theFont fSize - getDescent theFont fSize) (Rgb 1 0 0) (Rgb 0 0 1)) (addShape charRect)
         in
         (BluePara theFont w', c':l)
     
@@ -336,7 +337,7 @@ instance ParagraphStyle MyVertStyles MyParaStyles  where
         let f = Rectangle ((xa-3) :+ (ya-3)) ((xb+3) :+ (yb+3))
         fillColor $ Rgb 0.6 0.6 1
         fill f
-        b
+        _ <- b
         strokeColor red
         stroke f
         return ()
