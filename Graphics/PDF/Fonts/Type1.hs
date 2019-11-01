@@ -29,7 +29,6 @@ import Graphics.PDF.Fonts.Font
 import Graphics.PDF.Fonts.AFMParser 
 import Graphics.PDF.Fonts.Encoding
 import Graphics.PDF.Fonts.FontTypes
-import Graphics.PDF.Fonts.AFMParser (AFMFont, parseFont)
 import Data.List 
 
 data Type1Font = Type1Font FontStructure (PDFReference EmbeddedFont)

@@ -95,7 +95,7 @@ size t
       Nil     -> 0
 
 -- | /O(min(n,W))/. Lookup the value at a key in the map.
-lookup :: (Monad m) => Key a -> PDFTree a -> m a
+lookup :: (MonadFail m) => Key a -> PDFTree a -> m a
 lookup k t = case lookup' k t of
     Just x -> return x
     Nothing -> fail "Data.PDFTree.lookup: Key not found"
